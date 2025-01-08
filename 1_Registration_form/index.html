@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+        }
+
+        .form-check-label {
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .input-group-text {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .btn-primary {
+            background-color: #6c63ff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #5b54e5;
+        }
+
+        .form-text {
+            font-size: 0.9rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check-inline {
+            margin-right: 15px;
+        }
+
+        .custom-input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-input-group select {
+            border-radius: 8px 0 0 8px;
+            border-right: none;
+        }
+
+        .custom-input-group input {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        .form-label.required::after {
+            content: " *";
+            color: red;
+            font-size: 1.2rem;
+            margin-left: 5px;
+        }
+        .requirement {
+            margin: 5px 0;
+            color: red;
+        }
+
+        .valid {
+            color: green;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 class="text-center mb-4">Registration Form</h2>
+        <form id="myForm" action="/submit-form" method="POST">
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label for="full-name" class="form-label required">Full Name</label>
+                <input type="text" class="form-control" id="full-name" name="full-name" required>
+                <div id="fullNameError" class="error-message">Full Name should contain only letters and spaces.</div>
+
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mb-3">
+                <label for="dob" class="form-label required">Date of Birth</label>
+                <input type="date" class="form-control " id="dob" name="dob" required>
+                <div id="dobError" class="error-message">Please enter a valid date.</div>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+                <label class="form-label required">Gender :  </label>
+                <div class="form-check form-check-inline  ">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                    <label class="form-check-label" for="other">Other</label>
+                </div>
+                <small class="form-text text-muted ">Please select your gender.</small>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label required">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div id="emailError" class="error-message">Please enter a valid email address.</div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label required">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div id="passwordRequirements" class="password-requirements">
+                    <div id="length" class="requirement">Minimum 8 characters</div>
+                    <div id="uppercase" class="requirement">At least 1 uppercase letter</div>
+                    <div id="lowercase" class="requirement">At least 1 lowercase letter</div>
+                    <div id="number" class="requirement">At least 1 number</div>
+                    <div id="special" class="requirement">At least 1 special character (e.g., @, #, $, %)</div>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label for="confirmPassword required" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <div id="confirmPasswordError" class="error-message">Passwords do not match.</div>
+
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3">
+                <label for="phone" class="form-label required">Phone Number</label>
+                <div class="input-group custom-input-group">
+                    <select class="form-select" id="countryCode" aria-label="Country Code" required>
+                        <option value="" disabled selected>Select Country Code</option>
+                        <option value="+1">+1 (United States/Canada)</option>
+                        <option value="+44">+44 (United Kingdom)</option>
+                        <option value="+61">+61 (Australia)</option>
+                        <option value="+91">+91 (India)</option>
+                        <option value="+81">+81 (Japan)</option>
+                        <option value="+86">+86 (China)</option>
+                        <option value="+49">+49 (Germany)</option>
+                        <option value="+33">+33 (France)</option>
+                        <option value="+39">+39 (Italy)</option>
+                        <option value="+55">+55 (Brazil)</option>
+                        <option value="+7">+7 (Russia)</option>
+                        <option value="+34">+34 (Spain)</option>
+                        <option value="+27">+27 (South Africa)</option>
+                        <option value="+64">+64 (New Zealand)</option>
+                        <option value="+82">+82 (South Korea)</option>
+                    </select>
+                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"  maxlength="10">
+                </div>
+                <small class="form-text text-muted">Please provide your phone number in the format +91-XXX-XXX-XXXX.</small>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label for="address" class="form-label required">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+            </div>
+
+            <!-- Designation -->
+            <div class="mb-3">
+                <label for="designation" class="form-label required">Designation</label>
+                <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter your designation" required>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
