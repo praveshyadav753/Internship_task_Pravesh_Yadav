@@ -1,50 +1,41 @@
--- Schema creation for the ride-hailing application
+# Schema Structure for the Ride-Hailing Application
 
--- Drivers table
-CREATE TABLE Drivers (
-    DriverID INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    Phone VARCHAR(15),
-    City VARCHAR(50),
-    VehicleType VARCHAR(20),
-    Rating DECIMAL(2, 1) -- Rating out of 5
-);
+## 1. Drivers Table
+- **DriverID** (INT, Primary Key): Unique identifier for each driver.
+- **FirstName** (VARCHAR(50)): Driver's first name.
+- **LastName** (VARCHAR(50)): Driver's last name.
+- **Phone** (VARCHAR(15)): Driver's phone number.
+- **City** (VARCHAR(50)): City where the driver is located.
+- **VehicleType** (VARCHAR(20)): Type of vehicle used by the driver (e.g., Sedan, SUV).
+- **Rating** (DECIMAL(2, 1)): Rating of the driver, ranging from 0.0 to 5.0.
 
--- Riders table
-CREATE TABLE Riders (
-    RiderID INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    Phone VARCHAR(15),
-    City VARCHAR(50),
-    JoinDate DATE
-);
+## 2. Riders Table
+- **RiderID** (INT, Primary Key): Unique identifier for each rider.
+- **FirstName** (VARCHAR(50)): Rider's first name.
+- **LastName** (VARCHAR(50)): Rider's last name.
+- **Phone** (VARCHAR(15)): Rider's phone number.
+- **City** (VARCHAR(50)): City where the rider is located.
+- **JoinDate** (DATE): Date when the rider joined the platform.
 
--- Rides table
-CREATE TABLE Rides (
-    RideID INT PRIMARY KEY,
-    RiderID INT,
-    DriverID INT,
-    RideDate DATETIME,
-    PickupLocation VARCHAR(100),
-    DropLocation VARCHAR(100),
-    Distance DECIMAL(5, 2), -- Distance in km
-    Fare DECIMAL(10, 2),
-    RideStatus VARCHAR(20), -- E.g., 'Completed', 'Cancelled', 'Ongoing'
-    FOREIGN KEY (RiderID) REFERENCES Riders(RiderID),
-    FOREIGN KEY (DriverID) REFERENCES Drivers(DriverID)
-);
+## 3. Rides Table
+- **RideID** (INT, Primary Key): Unique identifier for each ride.
+- **RiderID** (INT, Foreign Key): Foreign key referencing the RiderID in the Riders table.
+- **DriverID** (INT, Foreign Key): Foreign key referencing the DriverID in the Drivers table.
+- **RideDate** (DATETIME): Date and time when the ride took place.
+- **PickupLocation** (VARCHAR(100)): The pickup location for the ride.
+- **DropLocation** (VARCHAR(100)): The drop-off location for the ride.
+- **Distance** (DECIMAL(5, 2)): Distance traveled during the ride, measured in kilometers.
+- **Fare** (DECIMAL(10, 2)): Fare charged for the ride.
+- **RideStatus** (VARCHAR(20)): The status of the ride (e.g., 'Completed', 'Cancelled', 'Ongoing').
 
--- Payments table
-CREATE TABLE Payments (
-    PaymentID INT PRIMARY KEY,
-    RideID INT,
-    PaymentMethod VARCHAR(20), -- E.g., 'Card', 'Cash', 'Wallet'
-    Amount DECIMAL(10, 2),
-    PaymentDate DATETIME,
-    FOREIGN KEY (RideID) REFERENCES Rides(RideID)
-);
+## 4. Payments Table
+- **PaymentID** (INT, Primary Key): Unique identifier for each payment.
+- **RideID** (INT, Foreign Key): Foreign key referencing the RideID in the Rides table.
+- **PaymentMethod** (VARCHAR(20)): The method used for payment (e.g., 'Card', 'Cash', 'Wallet').
+- **Amount** (DECIMAL(10, 2)): The amount paid for the ride.
+- **PaymentDate** (DATETIME): Date and time when the payment was made.
+
+---
 
 -- Assignment Queries
 
