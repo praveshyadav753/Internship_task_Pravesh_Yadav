@@ -50,68 +50,117 @@
 ---
 
 
--- Assignment Queries
+## Assignment Queries
 
--- 1. Retrieve the names and contact details of all drivers with a rating of 4.5 or higher.
-SELECT FirstName, LastName, Phone, City 
+### 1. Retrieve the names and contact details of all drivers with a rating of 4.5 or higher.
+
+```sql
+SELECT concat(drivers.FirstName,' ',drivers.LastName) as name , Phone, City 
 FROM Drivers 
 WHERE Rating >= 4.5;
 
--- 2. Find the total number of rides completed by each driver.
-SELECT DriverID, COUNT(*) AS TotalRides 
-FROM Rides 
-WHERE RideStatus = 'Completed' 
-GROUP BY DriverID;
+```
 
--- 3. List all riders who have never booked a ride.
-SELECT FirstName, LastName, Phone, City 
-FROM Riders 
-WHERE RiderID NOT IN (SELECT DISTINCT RiderID FROM Rides);
 
--- 4. Calculate the total earnings of each driver from completed rides.
-SELECT d.DriverID, d.FirstName, d.LastName, SUM(r.Fare) AS TotalEarnings 
-FROM Drivers d
-JOIN Rides r ON d.DriverID = r.DriverID 
-WHERE r.RideStatus = 'Completed' 
-GROUP BY d.DriverID, d.FirstName, d.LastName;
+### 2. Find the total number of rides completed by each driver.
 
--- 5. Retrieve the most recent ride for each rider.
-SELECT r.RiderID, MAX(rd.RideDate) AS MostRecentRide 
-FROM Riders r
-JOIN Rides rd ON r.RiderID = rd.RiderID 
-GROUP BY r.RiderID;
+```sql
+select drivers.DriverID,concat(drivers.FirstName,' ',drivers.LastName) as name,count(*) as rides_count
+from drivers 
+join
+rides
+on drivers.DriverID=rides.DriverID 
+ and RideStatus = 'Completed' 
+group by drivers.DriverID,drivers.FirstName,drivers.LastName;
+```
 
--- 6. Count the number of rides taken in each city.
-SELECT d.City, COUNT(*) AS TotalRides 
-FROM Rides r
-JOIN Drivers d ON r.DriverID = d.DriverID 
-GROUP BY d.City;
 
--- 7. List all rides where the distance was greater than 20 km.
-SELECT RideID, RiderID, DriverID, Distance, Fare 
-FROM Rides 
-WHERE Distance > 20;
+### 3. List all riders who have never booked a ride.
 
--- 8. Identify the most preferred payment method.
-SELECT PaymentMethod, COUNT(*) AS UsageCount 
-FROM Payments 
-GROUP BY PaymentMethod 
-ORDER BY UsageCount DESC 
-LIMIT 1;
+```sql
+select riders.riderid,firstname ,lastname,phone,city
+from riders
+left join
+rides
+on riders.RiderID=rides.RiderId
+where rides.RiderID is null;
+```
 
--- 9. Find the top 3 highest-earning drivers.
-SELECT d.DriverID, d.FirstName, d.LastName, SUM(r.Fare) AS TotalEarnings 
-FROM Drivers d
-JOIN Rides r ON d.DriverID = r.DriverID 
-WHERE r.RideStatus = 'Completed' 
-GROUP BY d.DriverID, d.FirstName, d.LastName 
-ORDER BY TotalEarnings DESC 
-LIMIT 3;
 
--- 10. Retrieve details of all cancelled rides along with the rider's and driver's names.
-SELECT r.RideID, ri.FirstName AS RiderFirstName, ri.LastName AS RiderLastName, 
-       d.FirstName AS DriverFirstName, d.LastName AS DriverLastName, r.RideDate 
-FROM Rides r
-JOIN Riders ri ON r.RiderID = ri.RiderID 
-JOIN Drivers d ON r.DriverID = d.DriverID 
-WHERE r.RideStatus = 'Cancelled';
+ ###  4. Calculate the total earnings of each driver from completed rides.
+
+```sql
+select drivers.FirstName,sum(rides.fare) as total_earning
+from drivers
+left join
+rides
+on drivers.driverid=rides.driverid and RideStatus ='completed'
+group by drivers.firstname;
+```
+
+
+###  5. Retrieve the most recent ride for each rider.
+
+```sql
+select riders.RiderID, riders.FirstName, max(rides.RideDate) as recent_ride
+from riders
+left join
+rides
+on riders.RiderID=rides.RiderID
+group by riders.riderid;
+```
+
+
+### 6. Count the number of rides taken in each city.
+
+```sql
+select riders.city,count(rides.RideID) as number_of_rides
+from riders
+left join
+rides
+on riders.riderid=rides.riderid
+group by riders.city
+
+```
+
+
+###  7. List all rides where the distance was greater than 20 km.
+```sql
+   select * 
+      from rides 
+      where distance >20;
+```
+
+###  8. Identify the most preferred payment method.
+```sql
+select  PaymentMethod, count(paymentmethod) as count
+   from payments
+   group by PaymentMethod
+   order by  count desc
+   limit 1;
+   ```
+
+### 9. Find the top 3 highest-earning drivers.  
+```sql
+
+select drivers.DriverID,drivers.FirstName, sum(rides.fare) as total_earning
+from drivers
+join
+rides
+on drivers.driverid=rides.driverid
+group by drivers.DriverID
+order by  total_earning
+desc limit 3;
+```
+### 10. Retrieve details of all cancelled rides along with the rider's and driver's names.
+```sql
+select riders.FirstName as ridername ,drivers.FirstName drivername, rides. *
+from rides
+join 
+riders
+on riders.RiderID=rides.RiderID   
+join 
+drivers
+on drivers.DriverID= rides.DriverID
+where RideStatus ='cancelled';  
+```
