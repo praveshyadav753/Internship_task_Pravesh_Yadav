@@ -62,3 +62,12 @@ This table stores payment information for each order.
 | `PaymentDate`     | DATE            | Date when the payment was made.             |
 
 ---
+
+## SQL Queries
+
+**1. Retrieve the names and locations of restaurants with a rating of 4.5 or higher.**
+```sql
+SELECT Name, City
+FROM Restaurants
+WHERE Rating >= 4.5;
+```
