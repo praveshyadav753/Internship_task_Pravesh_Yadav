@@ -5,6 +5,7 @@ const taskList = document.getElementById('taskList');
 
 // Get tasks from localStorage
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let editingIndex = null; // Track the index of the task being edited
 
 // Render tasks on page load
 function renderTasks() {
@@ -13,19 +14,29 @@ function renderTasks() {
         const li = document.createElement('li');
         li.innerHTML = `
             <span>${task}</span>
-            <button class="edit-btn" onclick="editTask(${index})">Edit</button>
-            <button onclick="deleteTask(${index})">Delete</button>
+            <div class="mange">
+                <button class="edit-btn" onclick="editTask(${index})">Edit</button>
+                <button onclick="deleteTask(${index})">Delete</button>
+            </div>
         `;
         taskList.appendChild(li);
     });
 }
 
-// Add new task
+// Add new task or save edit
 addTaskBtn.addEventListener('click', () => {
     const task = taskInput.value.trim();
     if (task) {
-        tasks.push(task);
-        taskInput.value = ''; // clear the input
+        if (editingIndex !== null) {
+            // Save edited task
+            tasks[editingIndex] = task;
+            editingIndex = null;
+            addTaskBtn.textContent = 'Add Task'; // Reset button text
+        } else {
+            // Add new task
+            tasks.push(task);
+        }
+        taskInput.value = ''; // Clear input field
         updateLocalStorage();
         renderTasks();
     }
@@ -33,12 +44,9 @@ addTaskBtn.addEventListener('click', () => {
 
 // Edit task
 function editTask(index) {
-    const newTask = prompt('Edit task:', tasks[index]);
-    if (newTask !== null && newTask.trim() !== '') {
-        tasks[index] = newTask.trim();
-        updateLocalStorage();
-        renderTasks();
-    }
+    taskInput.value = tasks[index]; // Set input value to the task text
+    editingIndex = index; // Set the editing index
+    addTaskBtn.textContent = 'Save Task'; // Change button text
 }
 
 // Delete task
