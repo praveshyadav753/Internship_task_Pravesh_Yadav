@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic News Feed with Pagination</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Article Form -->
+    <section class="article-form">
+      <h1>Add a News Article</h1>
+      <form id="articleForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter the title" required />
+        
+        <label for="description">Description:</label>
+        <textarea id="description" placeholder="Enter the description" required></textarea>
+        
+        <label for="imageUrl">Image URL (optional):</label>
+        <input type="url" id="imageUrl" placeholder="Enter the image URL" />
+        
+        <button type="submit">Add Article</button>
+      </form>
+    </section>
+
+    <!-- News Feed Section -->
+    <section class="news-feed">
+      <h2>News Feed</h2>
+      <div id="articlesContainer" class="grid"></div>
+    </section>
+
+    <!-- Pagination Controls -->
+    <section class="pagination">
+      <button id="prevBtn">Previous</button>
+      <div id="pageNumbers"></div>
+      <button id="nextBtn">Next</button>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
