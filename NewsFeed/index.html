@@ -4,38 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic News Feed with Pagination</title>
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="container mx-auto px-20 py-6 w-md">
     <!-- Article Form -->
-    <section class="article-form">
-      <h1>Add a News Article</h1>
-      <form id="articleForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Enter the title" required />
+    <section class="article-form bg-white rounded-lg shadow p-6 mb-8">
+      <h1 class="text-2xl font-bold text-center mb-4">Add a News Article</h1>
+      <form id="articleForm" class="space-y-4">
+        <div>
+          <label for="title" class="block text-sm font-medium mb-1">Title:</label>
+          <input type="text" id="title" placeholder="Enter the title" required 
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
         
-        <label for="description">Description:</label>
-        <textarea id="description" placeholder="Enter the description" required></textarea>
+        <div>
+          <label for="description" class="block text-sm font-medium mb-1">Description:</label>
+          <textarea id="description" placeholder="Enter the description" required 
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+        </div>
         
-        <label for="imageUrl">Image URL (optional):</label>
-        <input type="url" id="imageUrl" placeholder="Enter the image URL" />
+        <div>
+          <label for="imageUrl" class="block text-sm font-medium mb-1">Image:</label>
+          <input type="file" id="imageUrl" 
+            class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
         
-        <button type="submit">Add Article</button>
+        <button type="submit" 
+          class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg hover:bg-blue-600">
+          Add Article
+        </button>
       </form>
     </section>
 
     <!-- News Feed Section -->
-    <section class="news-feed">
-      <h2>News Feed</h2>
-      <div id="articlesContainer" class="grid"></div>
+    <section class="news-feed bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold mb-4">News Feed</h2>
+      <div id="articlesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 " >
+        <!-- Articles will be dynamically added here -->
+      </div>
     </section>
+    
+    
 
     <!-- Pagination Controls -->
-    <section class="pagination">
-      <button id="prevBtn">Previous</button>
-      <div id="pageNumbers"></div>
-      <button id="nextBtn">Next</button>
+    <section class="pagination flex items-center justify-center space-x-4">
+      <button id="prevBtn" 
+        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">
+        Previous
+      </button>
+      <div id="pageNumbers" class="flex space-x-2">
+        <!-- Page numbers will be dynamically added here -->
+      </div>
+      <button id="nextBtn" 
+        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">
+        Next
+      </button>
     </section>
   </div>
 
