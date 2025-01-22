@@ -5,28 +5,12 @@ const nextBtn = document.getElementById("nextBtn");
 const articleForm = document.getElementById("articleForm");
 const imagePreview = document.getElementById("imagePreview");
 
-const articlesPerPage = 4; // Number of articles per page
+const articlesPerPage = 3; // Number of articles per page
 let currentPage = 1; // Current page
 let articles = JSON.parse(localStorage.getItem("articles")) || []; // Load articles from local storage
 
 // Render articles on page load
 renderArticles();
-
-// Event listener for image preview
-// document.getElementById("imageUrl").addEventListener("change", (e) => {
-//   const file = e.target.files[0];
-//   if (file) {
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       imagePreview.src = reader.result;
-//       imagePreview.classList.remove("hidden");
-//     };
-//     reader.readAsDataURL(file);
-//   } else {
-//     imagePreview.src = "";
-//     imagePreview.classList.add("hidden");
-//   }
-// });
 
 // Event listener for form submission
 articleForm.addEventListener("submit", (e) => {
@@ -87,7 +71,7 @@ function renderArticles() {
     articleDiv.classList.add("card", "bg-white", "rounded-lg", "shadow-md", "overflow-hidden", "mb-4");
     articleDiv.innerHTML = `
       <div class="image-container bg-blue-50">
-        <img src="${article.imageUrl || "https://via.placeholder.com/150"}" alt="Article Image" class="w-full h-48 object-cover">
+        <img src="${article.imageUrl || ""}" alt="Article Image" class="w-full h-48 object-cover">
       </div>
       <div class="p-4">
         <h3 class="text-lg font-semibold text-gray-800 mb-2">${article.title}</h3>
